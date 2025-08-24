@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Students – jqGrid Local</title>
+
+    <!-- jqGrid CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/free-jqgrid@4.15.5/css/ui.jqgrid.min.css">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+    <!-- jqGrid JS -->
+    <script src="https://cdn.jsdelivr.net/npm/free-jqgrid@4.15.5/js/jquery.jqgrid.min.js"></script>
+
+    <style>
+        body {
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #f9f9f9;
+        }
+
+        h2 {
+            margin-top: 30px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-section {
+            width: 600px;
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .form-section input {
+            margin: 5px 10px 15px 0;
+            padding: 8px;
+            width: calc(50% - 10px);
+            box-sizing: border-box;
+        }
+
+        .form-section button {
+            padding: 8px 16px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 5px;
+            background: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .form-section button#clear {
+            background: #6c757d;
+        }
+
+        #grid-container {
+            width: 90%;
+            max-width: 800px;
+        }
+
+        #grid {
+            width: 100%;
+        }
+
+        .ui-jqgrid .ui-jqgrid-hdiv {
+            background: #007bff;
+            color: #fff;
+        }
+
+        .edit-btn, .delete-btn {
+            padding: 3px 8px;
+            margin: 2px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .edit-btn { background-color: #ffc107; color: #fff; }
+        .delete-btn { background-color: #dc3545; color: #fff; }
+    </style>
+</head>
+<body>
+
+<h2>Student Management</h2>
+
+<!-- Form for Add/Edit -->
+<form class="form-section" id="studentForm">
+    <input type="hidden" id="id">
+    <input type="text" id="name" placeholder="First Name" required>
+    <input type="text" id="address" placeholder="Address" required>
+    <input type="text" id="department" placeholder="Department" required>
+    <div>
+        <button type="submit" id="save">Save</button>
+        <button type="button" id="clear">Clear</button>
+    </div>
+</form>
+
+<div id="grid-container">
+    <table id="grid"></table>
+    <div id="pager"></div>
+</div>
+
+<script src="js/studentDetail.js"> </script>
+
+</body>
+</html>

@@ -123,4 +123,37 @@ public class StudentDetailDaoImpl implements StudentDetailDao {
         }
         return jsonResponse;
     }
+
+    @Override
+    public int getStudentCount(String countQuery) {
+        try {
+            return jdbcTemplate.queryForObject(countQuery, Integer.class);
+        } catch (Exception e) {
+            return 0;  // In case of an error, return 0 as a fallback
+        }
+    }
+
+    @Override
+    public JSONObject getStudentDetailGrid(String query, int offset, int rows) {
+        JSONObject jsonResponse = new JSONObject();
+        try {
+            // Execute the query with LIMIT and OFFSET
+            List<StudentDetail> allStudentsList = jdbcTemplate.query(query,
+                    new Object[] { rows, offset },
+                    new BeanPropertyRowMapper<>(StudentDetail.class));
+
+            if (!allStudentsList.isEmpty()) {
+                jsonResponse.put("success", true);
+                jsonResponse.put("message", "Fetched student details successfully");
+                jsonResponse.put("data", allStudentsList);
+            } else {
+                jsonResponse.put("success", false);
+                jsonResponse.put("message", "No student records found");
+            }
+        } catch (Exception e) {
+            jsonResponse.put("success", false);
+            jsonResponse.put("message", "Error fetching students: " + e.getMessage());
+        }
+        return jsonResponse;
+    }
 }

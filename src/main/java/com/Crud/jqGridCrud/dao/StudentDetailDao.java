@@ -13,4 +13,8 @@ public interface StudentDetailDao {
     JSONObject deleteStudentDetail(String query, String active, Integer id);
 
     JSONObject duplicateCheck(String query, String keyName, int id);
+
+    int getStudentCount(String countQuery);
+
+    JSONObject getStudentDetailGrid(String query, int offset, int rows);
 }

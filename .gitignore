@@ -33,7 +33,7 @@ build/
 .vscode/
 
 # Ignore local or secret config files
-application-local.properties
-application-secret.properties
-application.properties
-
+#application-local.properties
+#application-secret.properties
+#application.properties
+#

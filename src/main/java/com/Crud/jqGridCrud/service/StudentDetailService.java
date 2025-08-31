@@ -11,4 +11,6 @@ public interface StudentDetailService {
     JSONObject updateStudentDetail(Integer id, StudentDetail studentDetail);
 
     JSONObject deleteStudentDetail(Integer id, StudentDetail studentDetail);
+
+    JSONObject getStudentDetailGrid(int page, int rows);
 }

@@ -107,4 +107,30 @@ public class StudentDetailServiceImpl implements StudentDetailService {
         }
         return jsonResponse;
     }
+
+    @Override
+    public JSONObject getStudentDetailGrid(int page, int rows) {
+        JSONObject jsonResponse = new JSONObject();
+
+        // Calculate the offset for pagination
+        int offset = (page - 1) * rows;
+
+        String query = """
+                SELECT id, name, keyName, address, department, IF(active=1, 'Yes', 'No') as active
+                FROM students_detail
+                LIMIT ? OFFSET ?
+                """;
+
+        jsonResponse = studentDetailDao.getStudentDetailGrid(query, offset, rows);
+
+        // Get total count of students for pagination (this is necessary for jqGrid to show total pages)
+        String countQuery = "SELECT COUNT(*) FROM students_detail";
+        int totalRecords = studentDetailDao.getStudentCount(countQuery);
+
+        // Add the count to the response
+        jsonResponse.put("totalRecords", totalRecords);
+        jsonResponse.put("totalPages", Math.ceil((double) totalRecords / rows));
+
+        return jsonResponse;
+    }
 }

@@ -1,10 +1,16 @@
 package com.Crud.jqGridCrud.controller;
 
+import com.Crud.jqGridCrud.model.GridResponse;
 import com.Crud.jqGridCrud.model.StudentDetail;
 import com.Crud.jqGridCrud.service.StudentDetailService;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class StudentDetailController {
@@ -22,7 +28,13 @@ public class StudentDetailController {
     @GetMapping(value = "/get-student-detail", produces = "application/json")
     public String getStudentDetail( @ModelAttribute StudentDetail studentDetail) {
         JSONObject response = new JSONObject();
-        response = studentDetailService.getStudentDetail(studentDetail);
+
+        try {
+            response = studentDetailService.getStudentDetail(studentDetail);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
         return response.toString();
     }
 
@@ -40,4 +52,5 @@ public class StudentDetailController {
         response = studentDetailService.deleteStudentDetail(id, studentDetail);
         return response.toString();
     }
+
 }

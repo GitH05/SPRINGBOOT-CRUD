@@ -1,12 +1,12 @@
 $(document).ready(function() {
     // Initialize jqGrid
     $("#grid").jqGrid({
-        url: "/get-student-detail-grid",
+        url: "get-student-grid",
         datatype: "json",
         mtype: "GET",
         colNames: ['ID', 'Name', 'Address', 'Department', 'Active', 'Actions'],
         colModel: [
-            { name: 'id', index: 'id', width: 50, align: 'center', key: true },
+            { name: 'id', index: 'id', width: 50, align: 'center', key: true, hidden: true },
             { name: 'name', index: 'name', width: 150 },
             { name: 'address', index: 'address', width: 200 },
             { name: 'department', index: 'department', width: 150 },
@@ -42,8 +42,6 @@ $(document).ready(function() {
     // Form submission (Add/Update)
     $('#studentForm').submit(function(e) {
         e.preventDefault();
-
-        // Simple validation (ensure required fields aren't empty)
         const name = $('#name').val();
         const address = $('#address').val();
         const department = $('#department').val();
@@ -60,7 +58,7 @@ $(document).ready(function() {
             department
         };
 
-        const url = student.id ? `/update-student/${student.id}` : "/add-student";
+        const url = student.id ? `/update-student-detail/${student.id}` : "/add-student-detail";
 
         $.ajax({
             url: url,

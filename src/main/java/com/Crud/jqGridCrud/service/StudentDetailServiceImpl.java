@@ -1,10 +1,13 @@
 package com.Crud.jqGridCrud.service;
 
 import com.Crud.jqGridCrud.dao.StudentDetailDao;
+import com.Crud.jqGridCrud.model.GridResponse;
 import com.Crud.jqGridCrud.model.StudentDetail;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class StudentDetailServiceImpl implements StudentDetailService {
@@ -108,29 +111,51 @@ public class StudentDetailServiceImpl implements StudentDetailService {
         return jsonResponse;
     }
 
-    @Override
-    public JSONObject getStudentDetailGrid(int page, int rows) {
-        JSONObject jsonResponse = new JSONObject();
+//    @Override
+//    public JSONObject getStudentDetailGrid(int page, int rows) {
+//        JSONObject jsonResponse = new JSONObject();
+//
+//        // Calculate the offset for pagination
+//        int offset = (page - 1) * rows;
+//
+//        String query = """
+//                SELECT id, name, keyName, address, department, IF(active=1, 'Yes', 'No') as active
+//                FROM students_detail
+//                LIMIT ? OFFSET ?
+//                """;
+//
+//        jsonResponse = studentDetailDao.getStudentDetailGrid(query, offset, rows);
+//
+//        // Get total count of students for pagination (this is necessary for jqGrid to show total pages)
+//        String countQuery = "SELECT COUNT(*) FROM students_detail";
+//        int totalRecords = studentDetailDao.getStudentCount(countQuery);
+//
+//        // Add the count to the response
+//        jsonResponse.put("totalRecords", totalRecords);
+//        jsonResponse.put("totalPages", Math.ceil((double) totalRecords / rows));
+//
+//        return jsonResponse;
+//    }
 
-        // Calculate the offset for pagination
+    @Override
+    public GridResponse getPaginatedEmployees(int page, int rows) {
+        // Calculate the offset based on page and row count
         int offset = (page - 1) * rows;
 
-        String query = """
-                SELECT id, name, keyName, address, department, IF(active=1, 'Yes', 'No') as active
-                FROM students_detail
-                LIMIT ? OFFSET ?
-                """;
+        // Define the SQL queries for fetching employees and counting records
+        String sql = "SELECT * FROM students_detail LIMIT ? OFFSET ?";
+        String countSql = "SELECT COUNT(*) FROM students_detail";
 
-        jsonResponse = studentDetailDao.getStudentDetailGrid(query, offset, rows);
+        // Fetch paginated employees
+        List<StudentDetail> employees = studentDetailDao.executeQuery(sql, new Object[]{rows, offset});
 
-        // Get total count of students for pagination (this is necessary for jqGrid to show total pages)
-        String countQuery = "SELECT COUNT(*) FROM students_detail";
-        int totalRecords = studentDetailDao.getStudentCount(countQuery);
+        // Fetch total employee count
+        int totalEmployees = studentDetailDao.executeCountQuery(countSql, new Object[]{});
 
-        // Add the count to the response
-        jsonResponse.put("totalRecords", totalRecords);
-        jsonResponse.put("totalPages", Math.ceil((double) totalRecords / rows));
+        // Calculate total pages for pagination
+        int totalPages = (int) Math.ceil((double) totalEmployees / rows);
 
-        return jsonResponse;
+        // Return the response in the expected format for jqGrid
+        return new GridResponse(page, totalPages, totalEmployees, employees);
     }
 }

@@ -3,6 +3,8 @@ package com.Crud.jqGridCrud.dao;
 import com.Crud.jqGridCrud.model.StudentDetail;
 import org.json.JSONObject;
 
+import java.util.List;
+
 public interface StudentDetailDao {
     JSONObject getStudentDetail(String query, StudentDetail studentDetail);
 
@@ -14,7 +16,7 @@ public interface StudentDetailDao {
 
     JSONObject duplicateCheck(String query, String keyName, int id);
 
-    int getStudentCount(String countQuery);
 
-    JSONObject getStudentDetailGrid(String query, int offset, int rows);
+    List<StudentDetail> executeQuery(String sql, Object[] params);
+    int executeCountQuery(String sql, Object[] params);
 }

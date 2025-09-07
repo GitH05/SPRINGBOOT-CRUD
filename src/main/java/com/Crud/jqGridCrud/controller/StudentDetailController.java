@@ -53,4 +53,12 @@ public class StudentDetailController {
         return response.toString();
     }
 
+    //Grid
+    @GetMapping("/get-student-grid")
+    public GridResponse getPaginatedEmployees(
+            @RequestParam int page,
+            @RequestParam int rows) {
+        return studentDetailService.getPaginatedEmployees(page, rows);
+    }
+
 }

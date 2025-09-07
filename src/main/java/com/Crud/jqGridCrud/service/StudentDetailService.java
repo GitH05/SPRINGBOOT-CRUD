@@ -1,5 +1,6 @@
 package com.Crud.jqGridCrud.service;
 
+import com.Crud.jqGridCrud.model.GridResponse;
 import com.Crud.jqGridCrud.model.StudentDetail;
 import org.json.JSONObject;
 
@@ -12,5 +13,6 @@ public interface StudentDetailService {
 
     JSONObject deleteStudentDetail(Integer id, StudentDetail studentDetail);
 
-    JSONObject getStudentDetailGrid(int page, int rows);
+    GridResponse getPaginatedEmployees(int page, int rows);
+
 }

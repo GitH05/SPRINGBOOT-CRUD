@@ -2,8 +2,6 @@ package com.Crud.jqGridCrud.model;
 
 import java.util.List;
 
-import java.util.List;
-
 public class GridResponse {
     private int page;
     private int total;
@@ -50,4 +48,3 @@ public class GridResponse {
         this.rows = rows;
     }
 }
-

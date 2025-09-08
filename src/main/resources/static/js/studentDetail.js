@@ -24,7 +24,9 @@ $(document).ready(function() {
             root: 'rows',
             page: 'page',
             total: 'total',
-            records: 'records'
+            records: 'records',
+            repeatitems: false,
+            id: "id"
         },
         loadComplete: function(data) {
             console.log(data);
@@ -34,8 +36,10 @@ $(document).ready(function() {
     // Action buttons (Edit/Delete)
     function actionButtons(cellvalue, options, rowObject) {
         return `
-            <button class="edit-btn" onclick="editStudent(${rowObject.id})">Edit</button>
-            <button class="delete-btn" onclick="deleteStudent(${rowObject.id})">Delete</button>
+            <div class="action-cell">
+                <button class="edit-btn" onclick="editStudent('${options.rowId}')">✏️ Edit</button>
+                <button class="delete-btn" onclick="deleteStudent('${options.rowId}')">🗑️ Delete</button>
+            </div>
         `;
     }
 
@@ -84,20 +88,18 @@ $(document).ready(function() {
 
 // Edit student details and populate the form
 function editStudent(id) {
-    $.get(`/get-student-detail?id=${id}`, function(data) {
-        const student = data.rows[0];  // Assuming the response has `rows`
-        $('#id').val(student.id);
-        $('#name').val(student.name);
-        $('#address').val(student.address);
-        $('#department').val(student.department);
-    });
+    $("#studentForm input").focus();
+    $("#name").val($("#grid").jqGrid('getCell', id, 'name')).change();
+    $("#address").val($("#grid").jqGrid('getCell', id, 'address')).change();
+    $("#department").val($("#grid").jqGrid('getCell', id, 'department')).change();
+    $("#id").val($("#grid").jqGrid('getCell', id, 'id')).change();
 }
 
 // Delete student
 function deleteStudent(id) {
     if (confirm("Are you sure you want to delete this student?")) {
         $.ajax({
-            url: `/delete-student/${id}`,
+            url: 'delete-student-detail?id=' + id,
             method: 'DELETE',
             success: function(response) {
                 alert("Student deleted successfully.");

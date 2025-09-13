@@ -17,7 +17,7 @@ $(document).ready(function() {
         rowNum: 10,
         rowList: [10, 20, 30],
         sortname: 'id',
-        sortorder: 'asc',
+        //sortorder: 'asc',
         viewrecords: true,
         gridview: true,
         jsonReader: {

@@ -11,7 +11,7 @@ $(document).ready(function() {
             { name: 'address', index: 'address', width: 200 },
             { name: 'department', index: 'department', width: 150 },
             { name: 'active', index: 'active', width: 80, align: 'center' },
-            { name: 'actions', index: 'actions', width: 100, sortable: false, formatter: actionButtons }
+            { name: 'actions', index: 'actions', search: false, width: 100, sortable: false, formatter: actionButtons }
         ],
         pager: '#pager',
         rowNum: 10,
@@ -32,6 +32,24 @@ $(document).ready(function() {
             console.log(data);
         }
     });
+    // ✅ Add Search Toolbar
+    $("#grid").jqGrid('filterToolbar', {
+        searchOperators: false,   // disable operators dropdown (=, !=, etc.)
+        searchOnEnter: false,     // search as you type
+        defaultSearch: "cn"       // "cn" = contains
+    });
+
+    // ✅ Add Navigation Bar with Refresh Button
+    $("#grid").jqGrid('navGrid', '#pager',
+        {
+            edit: false,
+            add: false,
+            del: false,
+            search: false,
+            refresh: true   // enables refresh button
+        }
+    );
+
 
     // Action buttons (Edit/Delete)
     function actionButtons(cellvalue, options, rowObject) {

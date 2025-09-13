@@ -28,7 +28,6 @@ public class StudentDetailController {
     @GetMapping(value = "/get-student-detail", produces = "application/json")
     public String getStudentDetail( @ModelAttribute StudentDetail studentDetail) {
         JSONObject response = new JSONObject();
-
         try {
             response = studentDetailService.getStudentDetail(studentDetail);
         }
